@@ -1,1 +1,774 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[7],{12:function(e,t,a){"use strict";a.d(t,"d",(function(){return r})),a.d(t,"e",(function(){return i})),a.d(t,"g",(function(){return o})),a.d(t,"f",(function(){return l})),a.d(t,"a",(function(){return u})),a.d(t,"c",(function(){return s})),a.d(t,"b",(function(){return d}));var n=a(1),r=function(e){return n.a.get("/api/role",{params:e})},i=function(e){return n.a.get("/api/guard-name-roles/".concat(e))},o=function(e){return n.a.get("/api/role/".concat(e,"/permissions"))},l=function(e,t){return n.a.put("/api/role/".concat(e,"/permissions"),{permissions:t})},u=function(e){return n.a.post("/api/role",e)},s=function(e,t){return n.a.patch("".concat("/api/role","/").concat(e),t)},d=function(e){return n.a.delete("".concat("/api/role","/").concat(e))}},18:function(e,t,a){"use strict";a.d(t,"a",(function(){return n}));var n={data:function(){return{queryParamsChange:!1}},methods:{},watch:{queryParams:{handler:function(){this.queryParamsChange=!0},deep:!0}},computed:{queryPage:function(){return this.queryParamsChange?1:this.pagination.currentPage}}}},228:function(e,t,a){"use strict";a.r(t);var n=a(12),r=a(3),i=a(4),o=a(33);function l(e,t){var a=Object.keys(e);if(Object.getOwnPropertySymbols){var n=Object.getOwnPropertySymbols(e);t&&(n=n.filter((function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable}))),a.push.apply(a,n)}return a}function u(e){for(var t=1;t<arguments.length;t++){var a=null!=arguments[t]?arguments[t]:{};t%2?l(Object(a),!0).forEach((function(t){s(e,t,a[t])})):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(a)):l(Object(a)).forEach((function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(a,t))}))}return e}function s(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}var d={name:"roleIndex",mixins:[a(18).a],components:{GuardSelect:o.a},data:function(){return u({},Object(r.e)(),{addForm:{name:"",guard_name:"",description:""},editForm:{name:"",guard_name:"",description:""},rules:{name:[{required:!0},{min:1,max:255}],guard_name:[{required:!0},{min:1,max:255}]}})},methods:{handleEdit:function(e,t){this.editForm={name:t.name,guard_name:t.guard_name,description:t.description},this.nowRowData={index:e,row:t},this.dialogEditFormVisible=!0},handleDelete:function(e,t){var a=this;Object(n.b)(t.id).then((function(t){Object(r.b)(e,a),a.requestData()}))},requestData:function(){var e=this;this.loading=!0,Object(n.d)(u({},this.queryParams,{page:this.queryPage})).then((function(t){Object(r.d)(t,e)}))},handleAddRole:function(){var e=this;this.$refs.addForm.validate((function(t){if(!t)return!1;Object(n.a)(e.addForm).then((function(t){Object(r.a)(e),e.requestData()}))}))},handleEditRole:function(){var e=this;this.$refs.editForm.validate((function(t){if(!t)return!1;Object(n.c)(e.nowRowData.row.id,e.editForm).then((function(t){Object(r.c)(e)}))}))}},computed:{updatePermission:function(){return Object(i.a)("role.update")},addPermission:function(){return Object(i.a)("role.store")},deletePermission:function(){return Object(i.a)("role.destroy")},assignPermission:function(){return Object(i.a)("role.assign-permissions")}},created:function(){this.requestData()}},c=a(0),m=Object(c.a)(d,(function(){var e=this,t=e.$createElement,a=e._self._c||t;return a("div",[a("el-form",{attrs:{inline:!0,model:e.queryParams,size:"mini"}},[a("el-form-item",{attrs:{label:e.$t("name")}},[a("el-input",{model:{value:e.queryParams.name,callback:function(t){e.$set(e.queryParams,"name",t)},expression:"queryParams.name"}})],1),e._v(" "),a("el-form-item",[a("el-button",{attrs:{type:"primary",icon:"el-icon-search"},on:{click:e.requestData}},[e._v(e._s(e.$t("search")))]),e._v(" "),e.addPermission?a("el-button",{attrs:{type:"primary",icon:"el-icon-plus"},on:{click:function(t){e.dialogAddFormVisible=!0}}},[e._v(e._s(e.$t("add")))]):e._e()],1)],1),e._v(" "),a("el-table",{directives:[{name:"loading",rawName:"v-loading",value:e.loading,expression:"loading"}],staticStyle:{width:"100%"},attrs:{data:e.tableData,border:""}},[a("el-table-column",{attrs:{prop:"name",label:e.$t("name")}}),e._v(" "),a("el-table-column",{attrs:{prop:"guard_name",label:e.$t("guardName")}}),e._v(" "),a("el-table-column",{attrs:{prop:"description",label:e.$t("description")}}),e._v(" "),a("el-table-column",{attrs:{prop:"created_at",label:e.$t("createdAt")}}),e._v(" "),a("el-table-column",{attrs:{prop:"updated_at",label:e.$t("updatedAt")}}),e._v(" "),a("el-table-column",{attrs:{fixed:"right",width:"300px",label:e.$t("actions")},scopedSlots:e._u([{key:"default",fn:function(t){return[e.updatePermission?a("el-button",{attrs:{size:"mini"},on:{click:function(a){return e.handleEdit(t.$index,t.row)}}},[e._v(e._s(e.$t("edit")))]):e._e(),e._v(" "),a("router-link",{attrs:{to:{name:"rolePermission",params:{id:t.row.id,guardName:t.row.guard_name}}}},[e.assignPermission?a("el-button",{attrs:{size:"mini"}},[e._v(e._s(e.$t("assignPermission")))]):e._e()],1),e._v(" "),e.deletePermission?a("el-button",{attrs:{size:"mini",type:"danger"},on:{click:function(a){return e.handleDelete(t.$index,t.row)}}},[e._v(e._s(e.$t("delete")))]):e._e()]}}])})],1),e._v(" "),a("el-pagination",{staticClass:"mo-page",attrs:{"current-page":e.pagination.currentPage,"page-size":e.pagination.pageSize,layout:"total, prev, pager, next, jumper",total:e.pagination.total},on:{"current-change":e.requestData,"update:currentPage":function(t){return e.$set(e.pagination,"currentPage",t)},"update:current-page":function(t){return e.$set(e.pagination,"currentPage",t)}}}),e._v(" "),a("el-dialog",{attrs:{title:e.$t("add"),visible:e.dialogAddFormVisible,width:"30%"},on:{"update:visible":function(t){e.dialogAddFormVisible=t}}},[a("el-form",{ref:"addForm",attrs:{model:e.addForm,rules:e.rules}},[a("el-form-item",{attrs:{label:e.$t("name"),prop:"name","label-width":e.formLabelWidth}},[a("el-input",{model:{value:e.addForm.name,callback:function(t){e.$set(e.addForm,"name",t)},expression:"addForm.name"}})],1),e._v(" "),a("el-form-item",{attrs:{label:e.$t("guardName"),prop:"guard_name","label-width":e.formLabelWidth}},[a("guard-select",{attrs:{nowValue:e.addForm.guard_name},on:{"update:nowValue":function(t){return e.$set(e.addForm,"guard_name",t)},"update:now-value":function(t){return e.$set(e.addForm,"guard_name",t)}}})],1),e._v(" "),a("el-form-item",{attrs:{label:e.$t("description"),prop:"description","label-width":e.formLabelWidth}},[a("el-input",{model:{value:e.addForm.description,callback:function(t){e.$set(e.addForm,"description",t)},expression:"addForm.description"}})],1)],1),e._v(" "),a("div",{staticClass:"dialog-footer",attrs:{slot:"footer"},slot:"footer"},[a("el-button",{on:{click:function(t){e.dialogAddFormVisible=!1}}},[e._v(e._s(e.$t("cancel")))]),e._v(" "),a("el-button",{attrs:{type:"primary"},on:{click:e.handleAddRole}},[e._v(e._s(e.$t("confirm")))])],1)],1),e._v(" "),a("el-dialog",{attrs:{title:e.$t("edit"),visible:e.dialogEditFormVisible,width:"30%"},on:{"update:visible":function(t){e.dialogEditFormVisible=t}}},[a("el-form",{ref:"editForm",attrs:{model:e.editForm,rules:e.rules}},[a("el-form-item",{attrs:{label:e.$t("name"),prop:"name","label-width":e.formLabelWidth}},[a("el-input",{model:{value:e.editForm.name,callback:function(t){e.$set(e.editForm,"name",t)},expression:"editForm.name"}})],1),e._v(" "),a("el-form-item",{attrs:{label:e.$t("guardName"),prop:"guard_name","label-width":e.formLabelWidth}},[a("guard-select",{attrs:{nowValue:e.editForm.guard_name},on:{"update:nowValue":function(t){return e.$set(e.editForm,"guard_name",t)},"update:now-value":function(t){return e.$set(e.editForm,"guard_name",t)}}})],1),e._v(" "),a("el-form-item",{attrs:{label:e.$t("description"),prop:"description","label-width":e.formLabelWidth}},[a("el-input",{model:{value:e.editForm.description,callback:function(t){e.$set(e.editForm,"description",t)},expression:"editForm.description"}})],1)],1),e._v(" "),a("div",{staticClass:"dialog-footer",attrs:{slot:"footer"},slot:"footer"},[a("el-button",{on:{click:function(t){e.dialogEditFormVisible=!1}}},[e._v(e._s(e.$t("cancel")))]),e._v(" "),a("el-button",{attrs:{type:"primary"},on:{click:e.handleEditRole}},[e._v(e._s(e.$t("confirm")))])],1)],1)],1)}),[],!1,null,null,null);t.default=m.exports},3:function(e,t,a){"use strict";a.d(t,"d",(function(){return r})),a.d(t,"c",(function(){return i})),a.d(t,"a",(function(){return o})),a.d(t,"b",(function(){return l})),a.d(t,"e",(function(){return u}));var n=a(11);function r(e,t){t.tableData=e.data.data;var a=e.data.meta;t.pagination={currentPage:a.current_page,pageSize:a.per_page,total:a.total,from:a.from,lastPage:a.last_page,to:a.to},t.loading=!1,t.queryParamsChange=!1}var i=function(e){n.a.editSuccess(e),e.dialogEditFormVisible=!1,Object.assign(e.nowRowData.row,e.editForm),e.tableData[e.nowRowData.index]=e.nowRowData.row,e.$refs.editForm.resetFields()},o=function(e){e.dialogAddFormVisible=!1,n.a.createSuccess(e),e.$refs.addForm.resetFields()},l=function(e,t){t.tableData.splice(e,1),n.a.deleteSuccess(t)},u=function(){return{queryParams:{},tableData:[],pagination:{currentPage:1,pageSize:15,total:0,from:1,lastPage:1,to:1},nowRowData:{index:0,row:{}},dialogAddFormVisible:!1,dialogEditFormVisible:!1,formLabelWidth:"120px",loading:!1}}},33:function(e,t,a){"use strict";var n=a(5),r={name:"GuardSelect",props:["nowValue"],data:function(){return{optionValue:this.nowValue,items:n.a.guardNames}},created:function(){},watch:{optionValue:function(e,t){this.$emit("update:nowValue",e)},nowValue:function(e){this.optionValue=e}}},i=a(0),o=Object(i.a)(r,(function(){var e=this,t=e.$createElement,a=e._self._c||t;return a("el-select",{attrs:{clearable:"",placeholder:e.$t("guardName")},model:{value:e.optionValue,callback:function(t){e.optionValue=t},expression:"optionValue"}},e._l(e.items,(function(e){return a("el-option",{key:e.label,attrs:{label:e.label,value:e.value}})})),1)}),[],!1,null,null,null);t.a=o.exports},4:function(e,t,a){"use strict";a.d(t,"a",(function(){return r}));var n=a(22),r=function(e){return n.a.getters.permissions.indexOf(e)>=0}}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[7],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/permission-group/index.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/admin/permission-group/index.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _api_permissionGroup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../api/permissionGroup */ "./resources/js/api/permissionGroup.js");
+/* harmony import */ var _libs_tableDataHandle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../libs/tableDataHandle */ "./resources/js/libs/tableDataHandle.js");
+/* harmony import */ var _libs_permission__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../libs/permission */ "./resources/js/libs/permission.js");
+/* harmony import */ var _libs_notify__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../libs/notify */ "./resources/js/libs/notify.js");
+/* harmony import */ var _mixins_queryParams__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/queryParams */ "./resources/js/mixins/queryParams.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'permissionGroupIndex',
+  mixins: [_mixins_queryParams__WEBPACK_IMPORTED_MODULE_4__["queryParams"]],
+  data: function data() {
+    return _objectSpread({}, Object(_libs_tableDataHandle__WEBPACK_IMPORTED_MODULE_1__["tableDefaultData"])(), {
+      addForm: {
+        name: ''
+      },
+      editForm: {
+        name: ''
+      },
+      rules: {
+        name: [{
+          required: true
+        }, {
+          min: 1,
+          max: 255
+        }]
+      }
+    });
+  },
+  methods: {
+    handleEdit: function handleEdit(index, row) {
+      this.editForm = {
+        name: row.name
+      };
+      this.nowRowData = {
+        index: index,
+        row: row
+      };
+      this.dialogEditFormVisible = true;
+    },
+    handleDelete: function handleDelete(index, row) {
+      var _this = this;
+
+      Object(_api_permissionGroup__WEBPACK_IMPORTED_MODULE_0__["deletePermissionGroup"])(row.id).then(function (response) {
+        Object(_libs_tableDataHandle__WEBPACK_IMPORTED_MODULE_1__["deleteSuccess"])(index, _this);
+
+        _this.requestData();
+      });
+    },
+    requestData: function requestData() {
+      var _this2 = this;
+
+      this.loading = true;
+      Object(_api_permissionGroup__WEBPACK_IMPORTED_MODULE_0__["getPermissionGroupList"])(_objectSpread({}, this.queryParams, {
+        page: this.queryPage
+      })).then(function (response) {
+        Object(_libs_tableDataHandle__WEBPACK_IMPORTED_MODULE_1__["responseDataFormat"])(response, _this2);
+      });
+    },
+    handleAddPermissionGroup: function handleAddPermissionGroup() {
+      var _this3 = this;
+
+      this.$refs['addForm'].validate(function (valid) {
+        if (valid) {
+          Object(_api_permissionGroup__WEBPACK_IMPORTED_MODULE_0__["addPermissionGroup"])(_this3.addForm).then(function (response) {
+            Object(_libs_tableDataHandle__WEBPACK_IMPORTED_MODULE_1__["addSuccess"])(_this3);
+
+            _this3.requestData();
+          });
+        } else {
+          return false;
+        }
+      });
+    },
+    handleEditPermissionGroup: function handleEditPermissionGroup() {
+      var _this4 = this;
+
+      this.$refs['editForm'].validate(function (valid) {
+        if (valid) {
+          Object(_api_permissionGroup__WEBPACK_IMPORTED_MODULE_0__["editPermissionGroup"])(_this4.nowRowData.row.id, _this4.editForm).then(function (response) {
+            Object(_libs_tableDataHandle__WEBPACK_IMPORTED_MODULE_1__["editSuccess"])(_this4);
+          });
+        } else {
+          return false;
+        }
+      });
+    }
+  },
+  computed: {
+    updatePermission: function updatePermission() {
+      return Object(_libs_permission__WEBPACK_IMPORTED_MODULE_2__["hasPermission"])('permission-group.update');
+    },
+    addPermission: function addPermission() {
+      return Object(_libs_permission__WEBPACK_IMPORTED_MODULE_2__["hasPermission"])('permission-group.store');
+    },
+    deletePermission: function deletePermission() {
+      return Object(_libs_permission__WEBPACK_IMPORTED_MODULE_2__["hasPermission"])('permission-group.destroy');
+    }
+  },
+  created: function created() {
+    this.requestData();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/permission-group/index.vue?vue&type=template&id=34990d83&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/admin/permission-group/index.vue?vue&type=template&id=34990d83& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "el-form",
+        { attrs: { inline: true, model: _vm.queryParams, size: "mini" } },
+        [
+          _c(
+            "el-form-item",
+            { attrs: { label: _vm.$t("name") } },
+            [
+              _c("el-input", {
+                model: {
+                  value: _vm.queryParams.name,
+                  callback: function($$v) {
+                    _vm.$set(_vm.queryParams, "name", $$v)
+                  },
+                  expression: "queryParams.name"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            [
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary", icon: "el-icon-search" },
+                  on: { click: _vm.requestData }
+                },
+                [_vm._v(_vm._s(_vm.$t("search")))]
+              ),
+              _vm._v(" "),
+              _vm.addPermission
+                ? _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary", icon: "el-icon-plus" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialogAddFormVisible = true
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.$t("add")))]
+                  )
+                : _vm._e()
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-table",
+        {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
+          staticStyle: { width: "100%" },
+          attrs: { data: _vm.tableData, border: "" }
+        },
+        [
+          _c("el-table-column", {
+            attrs: { prop: "name", label: _vm.$t("name") }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "created_at", label: _vm.$t("createdAt") }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "updated_at", label: _vm.$t("updatedAt") }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { fixed: "right", label: _vm.$t("actions") },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    _vm.updatePermission
+                      ? _c(
+                          "el-button",
+                          {
+                            attrs: { size: "mini" },
+                            on: {
+                              click: function($event) {
+                                return _vm.handleEdit(scope.$index, scope.row)
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.$t("edit")))]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.deletePermission
+                      ? _c(
+                          "el-button",
+                          {
+                            attrs: { size: "mini", type: "danger" },
+                            on: {
+                              click: function($event) {
+                                return _vm.handleDelete(scope.$index, scope.row)
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.$t("delete")))]
+                        )
+                      : _vm._e()
+                  ]
+                }
+              }
+            ])
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("el-pagination", {
+        staticClass: "mo-page",
+        attrs: {
+          "current-page": _vm.pagination.currentPage,
+          "page-size": _vm.pagination.pageSize,
+          layout: "total, prev, pager, next, jumper",
+          total: _vm.pagination.total
+        },
+        on: {
+          "current-change": _vm.requestData,
+          "update:currentPage": function($event) {
+            return _vm.$set(_vm.pagination, "currentPage", $event)
+          },
+          "update:current-page": function($event) {
+            return _vm.$set(_vm.pagination, "currentPage", $event)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: _vm.$t("add"),
+            visible: _vm.dialogAddFormVisible,
+            width: "30%"
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.dialogAddFormVisible = $event
+            }
+          }
+        },
+        [
+          _c(
+            "el-form",
+            { ref: "addForm", attrs: { model: _vm.addForm, rules: _vm.rules } },
+            [
+              _c(
+                "el-form-item",
+                {
+                  attrs: {
+                    label: _vm.$t("name"),
+                    prop: "name",
+                    "label-width": _vm.formLabelWidth
+                  }
+                },
+                [
+                  _c("el-input", {
+                    model: {
+                      value: _vm.addForm.name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.addForm, "name", $$v)
+                      },
+                      expression: "addForm.name"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "el-button",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.dialogAddFormVisible = false
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(_vm.$t("cancel")))]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary" },
+                  on: { click: _vm.handleAddPermissionGroup }
+                },
+                [_vm._v(_vm._s(_vm.$t("confirm")))]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: _vm.$t("edit"),
+            visible: _vm.dialogEditFormVisible,
+            width: "30%"
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.dialogEditFormVisible = $event
+            }
+          }
+        },
+        [
+          _c(
+            "el-form",
+            {
+              ref: "editForm",
+              attrs: { model: _vm.editForm, rules: _vm.rules }
+            },
+            [
+              _c(
+                "el-form-item",
+                {
+                  attrs: {
+                    label: _vm.$t("name"),
+                    prop: "name",
+                    "label-width": _vm.formLabelWidth
+                  }
+                },
+                [
+                  _c("el-input", {
+                    model: {
+                      value: _vm.editForm.name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.editForm, "name", $$v)
+                      },
+                      expression: "editForm.name"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "el-button",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.dialogEditFormVisible = false
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(_vm.$t("cancel")))]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary" },
+                  on: { click: _vm.handleEditPermissionGroup }
+                },
+                [_vm._v(_vm._s(_vm.$t("confirm")))]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/api/permissionGroup.js":
+/*!*********************************************!*\
+  !*** ./resources/js/api/permissionGroup.js ***!
+  \*********************************************/
+/*! exports provided: getPermissionGroupList, getPermissionGroupAll, guardNameForPermissions, addPermissionGroup, editPermissionGroup, deletePermissionGroup */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPermissionGroupList", function() { return getPermissionGroupList; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPermissionGroupAll", function() { return getPermissionGroupAll; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "guardNameForPermissions", function() { return guardNameForPermissions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addPermissionGroup", function() { return addPermissionGroup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editPermissionGroup", function() { return editPermissionGroup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deletePermissionGroup", function() { return deletePermissionGroup; });
+/* harmony import */ var _libs_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../libs/http */ "./resources/js/libs/http.js");
+
+var basicRoute = '/api/permission-group';
+var getPermissionGroupList = function getPermissionGroupList(params) {
+  return _libs_http__WEBPACK_IMPORTED_MODULE_0__["default"].get(basicRoute, {
+    params: params
+  });
+};
+var getPermissionGroupAll = function getPermissionGroupAll() {
+  return _libs_http__WEBPACK_IMPORTED_MODULE_0__["default"].get("".concat(basicRoute, "-all"));
+};
+var guardNameForPermissions = function guardNameForPermissions(guardName) {
+  return _libs_http__WEBPACK_IMPORTED_MODULE_0__["default"].get("/api/guard-name-for-permissions/".concat(guardName));
+};
+var addPermissionGroup = function addPermissionGroup(data) {
+  return _libs_http__WEBPACK_IMPORTED_MODULE_0__["default"].post(basicRoute, data);
+};
+var editPermissionGroup = function editPermissionGroup(id, data) {
+  return _libs_http__WEBPACK_IMPORTED_MODULE_0__["default"].patch("".concat(basicRoute, "/").concat(id), data);
+};
+var deletePermissionGroup = function deletePermissionGroup(id) {
+  return _libs_http__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"]("".concat(basicRoute, "/").concat(id));
+};
+
+/***/ }),
+
+/***/ "./resources/js/libs/permission.js":
+/*!*****************************************!*\
+  !*** ./resources/js/libs/permission.js ***!
+  \*****************************************/
+/*! exports provided: hasPermission */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasPermission", function() { return hasPermission; });
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
+
+var hasPermission = function hasPermission(name) {
+  return _store__WEBPACK_IMPORTED_MODULE_0__["default"].getters.permissions.indexOf(name) >= 0;
+};
+
+/***/ }),
+
+/***/ "./resources/js/libs/tableDataHandle.js":
+/*!**********************************************!*\
+  !*** ./resources/js/libs/tableDataHandle.js ***!
+  \**********************************************/
+/*! exports provided: responseDataFormat, editSuccess, addSuccess, deleteSuccess, tableDefaultData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "responseDataFormat", function() { return responseDataFormat; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editSuccess", function() { return editSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addSuccess", function() { return addSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteSuccess", function() { return deleteSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tableDefaultData", function() { return tableDefaultData; });
+/* harmony import */ var _notify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./notify */ "./resources/js/libs/notify.js");
+
+function responseDataFormat(response, th) {
+  th.tableData = response.data.data;
+  var meta = response.data.meta;
+  th.pagination = {
+    currentPage: meta.current_page,
+    pageSize: meta.per_page,
+    total: meta.total,
+    from: meta.from,
+    lastPage: meta.last_page,
+    to: meta.to
+  };
+  th.loading = false;
+  th.queryParamsChange = false;
+}
+var editSuccess = function editSuccess(th) {
+  _notify__WEBPACK_IMPORTED_MODULE_0__["default"].editSuccess(th);
+  th.dialogEditFormVisible = false;
+  Object.assign(th.nowRowData.row, th.editForm);
+  th.tableData[th.nowRowData.index] = th.nowRowData.row;
+  th.$refs['editForm'].resetFields();
+};
+var addSuccess = function addSuccess(th) {
+  th.dialogAddFormVisible = false;
+  _notify__WEBPACK_IMPORTED_MODULE_0__["default"].createSuccess(th);
+  th.$refs['addForm'].resetFields();
+};
+var deleteSuccess = function deleteSuccess(index, th) {
+  th.tableData.splice(index, 1);
+  _notify__WEBPACK_IMPORTED_MODULE_0__["default"].deleteSuccess(th);
+};
+var tableDefaultData = function tableDefaultData() {
+  return {
+    queryParams: {},
+    tableData: [],
+    pagination: {
+      currentPage: 1,
+      pageSize: 15,
+      total: 0,
+      from: 1,
+      lastPage: 1,
+      to: 1
+    },
+    nowRowData: {
+      index: 0,
+      row: {}
+    },
+    dialogAddFormVisible: false,
+    dialogEditFormVisible: false,
+    formLabelWidth: '120px',
+    loading: false
+  };
+};
+
+/***/ }),
+
+/***/ "./resources/js/mixins/queryParams.js":
+/*!********************************************!*\
+  !*** ./resources/js/mixins/queryParams.js ***!
+  \********************************************/
+/*! exports provided: queryParams */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "queryParams", function() { return queryParams; });
+var queryParams = {
+  data: function data() {
+    return {
+      queryParamsChange: false
+    };
+  },
+  methods: {},
+  watch: {
+    queryParams: {
+      handler: function handler() {
+        this.queryParamsChange = true;
+      },
+      deep: true
+    }
+  },
+  computed: {
+    queryPage: function queryPage() {
+      return this.queryParamsChange ? 1 : this.pagination.currentPage;
+    }
+  }
+};
+
+/***/ }),
+
+/***/ "./resources/js/views/admin/permission-group/index.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/views/admin/permission-group/index.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _index_vue_vue_type_template_id_34990d83___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=34990d83& */ "./resources/js/views/admin/permission-group/index.vue?vue&type=template&id=34990d83&");
+/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/js/views/admin/permission-group/index.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _index_vue_vue_type_template_id_34990d83___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _index_vue_vue_type_template_id_34990d83___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/admin/permission-group/index.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/admin/permission-group/index.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/views/admin/permission-group/index.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/permission-group/index.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/admin/permission-group/index.vue?vue&type=template&id=34990d83&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/views/admin/permission-group/index.vue?vue&type=template&id=34990d83& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_34990d83___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=34990d83& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/permission-group/index.vue?vue&type=template&id=34990d83&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_34990d83___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_34990d83___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

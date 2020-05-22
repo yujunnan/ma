@@ -4,10 +4,18 @@ import role from '../views/admin/role/routes'
 import permission from '../views/admin/permission/routes'
 import permissionGroup from '../views/admin/permission-group/routes'
 import menu from '../views/admin/menu/routes'
+import articleGategory from '../views/admin/article_category/routes'
+import article from '../views/admin/article/routes'
+
 import adminDashboard from '../views/admin/dashboard/routes'
 import adminLogin from '../views/admin/login/routes'
-
+//会员路由设置
+import userRoutes from '../views/users/routes'
+//web路由设置
+import webRoutes from '../views/web/routes'
 export default [
+  ...webRoutes,
+  ...userRoutes,
   {
     name: 'adminMain',
     path: '/admin',
@@ -19,11 +27,10 @@ export default [
     component: Admin,
     children: [
       ...adminDashboard, ...adminUser, ...role, ...permission, ...permissionGroup, ...menu
+      ,...articleGategory,...article
     ]
-
-
-
   },
+  ...adminLogin,
   {
       name: 'memberMain',
       path: '/member',
@@ -54,5 +61,5 @@ export default [
   },
 
 
-  ...adminLogin,
+
 ]

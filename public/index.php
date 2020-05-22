@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
@@ -48,13 +47,14 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 | and wonderful application we have prepared for them.
 |
 */
-
+// 从服务容器中解析处理 HTTP 请求的 Kernel 实例
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
-
+// 处理 HTTP 请求的核心代码
 $response = $kernel->handle(
     $request = Illuminate\Http\Request::capture()
 );
+// 发送响应
 
 $response->send();
-
+// 终止程序，做一些善后及清理工作
 $kernel->terminate($request, $response);

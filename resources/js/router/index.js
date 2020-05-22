@@ -4,6 +4,8 @@ import store from  '../store'
 import routes from './routers'
 import config from '../config'
 import { getToken, getPermissions } from '../libs/auth'
+import { getUser } from '../libs/user'
+
 import { Message } from 'element-ui'
 
 Vue.use(Router)
@@ -36,12 +38,21 @@ router.beforeEach((to, from, next) => {
           } else {
             if (!store.getters.token) {
               store.commit('SET_TOKEN', {token, provider})
+              getUser(provider).then( user => {
+                store.commit('SET_USER', {user})
+              }).catch(error => {
+                reject(error)
+              })
             }
             resolve()
           }
         }).catch(error => {
           reject(error)
         })
+        
+
+
+
       })
 
       let permission = new Promise((resolve, reject) => {

@@ -1,8 +1,11 @@
 <template>
   <div id="login">
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="login-container">
-      <h2>Mojito Admin</h2>
+      <h2> 后台管理
+      </h2>
       <el-form-item label="Username" prop="username">
+
+      
         <el-input  v-model="ruleForm.username" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item label="Password" prop="password">
@@ -22,8 +25,8 @@
     data() {
       return {
         ruleForm: {
-          username: '',
-          password: ''
+          username: 'member@gmail.com',
+          password: 'secret'
         },
         rules: {
           username: [

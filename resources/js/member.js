@@ -10,6 +10,7 @@ import router from './router'
 import store from './store'
 import config from './config'
 
+/*语言设置*/
 Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value)
 })

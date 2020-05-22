@@ -5,6 +5,8 @@ import tag from './modules/tag'
 import menu from './modules/menu'
 import permission from './modules/permission'
 import login from './modules/login'
+import user from './modules/user'
+
 import plugin from './plugin'
 
 Vue.use(Vuex)
@@ -15,7 +17,8 @@ const store = new Vuex.Store({
     menu,
     permission,
     login,
-    tag
+    tag,
+    user
   },
   plugins: [plugin]
 })

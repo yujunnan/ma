@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Hello! Mojito Admin</h1>
+    <h1>你好! 这里是后台</h1>
 
   </div>
 </template>

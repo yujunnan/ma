@@ -4,18 +4,25 @@ import { removeToken, setToken } from '../../libs/auth'
 const state = {
   token: '',
   provider: ''
+  
 }
 
 const getters = {
   token: state => state.token,
   accessToken : state => state.token.access_token,
+  provider:state=> state.provider
 }
 
 const mutations = {
   SET_TOKEN (state, {token, provider}) {
     state.token = token
     state.provider = provider
+  },
+  REMOVE_TOKEN(state){
+    state.token = ""
+    state.provider = ""   
   }
+
 }
 
 const actions = {
@@ -27,9 +34,7 @@ const actions = {
             ...response.data,
             created_at: new Date().getTime()
           }
-
           commit('SET_TOKEN', {token, provider})
-
           resolve(setToken(token, provider))
         })
         .catch(error => {
@@ -37,9 +42,9 @@ const actions = {
         })
     })
   },
-
   logoutHandle ({ commit }, provider ) {
     return new Promise((resolve, reject) => {
+      commit('REMOVE_TOKEN')
       removeToken(provider)
     })
   }

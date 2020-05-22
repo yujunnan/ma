@@ -1,8 +1,8 @@
 export default {
   admin: {
     authorize: {
-      clientId: 2,
-      clientSecret: '9tBGaDo6M0IFVFXU62HH6pYlov4rO8tGN2I4x86y'
+      clientId: '15',
+      clientSecret: 'KpUmmiC0lFDQmGNmOpmZuXf04Lifi1HjFvh1tUh7'
     },
     loginRouteName: 'adminLogin',
 
@@ -11,11 +11,11 @@ export default {
     dashboardFullPath: '/admin/dashboard',
 
     appName: {
-      fullName: 'Mojito Admin',
-      abbrName: 'Mojito'
+      fullName: '后台管理',
+      abbrName: '创材科技'
     },
 
-    locale: 'en'
+    locale: 'zh_CN'
   },
   member: {
       authorize: {
@@ -26,15 +26,28 @@ export default {
 
       dashboardName: 'memberDashboard',
 
-      dashboardFullPath: '/member/dashboard',
+      dashboardFullPath: ' /member/dashboard',
 
       appName: {
-          fullName: 'Member Centre ',
-          abbrName: 'Member'
+          fullName: '会员中心',
+          abbrName: '会员'
       },
 
-      locale: 'en'
+      locale: 'zh_CN'
   },
+  users: {
+    authorize: {
+        clientId: 14,
+        clientSecret: '7uQlrq48eftxY62iHkQYI0VMAsXBz0gRSr3awXao'
+    },
+    loginRouteName: 'userLogin',
+
+
+    locale: 'zh_CN'
+},
+
+
+
   guardNames: [
     {
       label: 'admin',
@@ -44,7 +57,11 @@ export default {
         label: 'member',
         value: 'member'
     }
-
+    ,
+    {
+        label: 'users',
+        value: 'users'
+    }
 
   ],
 

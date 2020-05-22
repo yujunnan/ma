@@ -42,7 +42,7 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
             'hash' => false,
         ],
@@ -53,8 +53,11 @@ return [
         'member' => [
             'driver' => 'passport',
             'provider' => 'member'
+        ],
+        'users' => [
+            'driver' => 'passport',
+            'provider' => 'user'
         ]
-
     ],
 
     /*
@@ -75,6 +78,7 @@ return [
     */
 
     'providers' => [
+ 
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
@@ -86,7 +90,7 @@ return [
         'member' => [
             'driver' => 'eloquent',
             'model' => App\Member::class,
-        ]
+        ],
 
 
 

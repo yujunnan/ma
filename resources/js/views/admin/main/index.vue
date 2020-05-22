@@ -10,6 +10,11 @@
         </keep-alive>
       </el-main>
     </el-container>
+    <!--
+    <el-backtop  target=".page-component__scroll .el-scrollbar__wrap"></el-backtop>-->
+    <el-backtop ></el-backtop>
+
+
   </el-container>
 </template>
 
