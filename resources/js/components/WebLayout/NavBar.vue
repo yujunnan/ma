@@ -1,16 +1,16 @@
 <template>
-    <el-menu :default-active="activeIndex" 
+    <el-menu :default-active="activeIndex"
     class="el-menu-demo" mode="horizontal" @select="handleSelect">
       <el-menu-item index="1">
-      <router-link to="/home">      
+      <router-link to="/home">
         首页
-      </router-link>     
+      </router-link>
 
       </el-menu-item>
       <el-menu-item index="2">
-      <router-link to="/barrage">      
-        弹幕
-      </router-link>     
+      <router-link to="/barrage">
+        测试组件
+      </router-link>
 
       </el-menu-item>
 
@@ -46,7 +46,7 @@
         退出
       </el-menu-item>
 
-      
+
     </el-menu>
 
 </template>
@@ -60,7 +60,7 @@
   export default {
     name: 'NavBar',
     props: {
-      
+
     },
     data () {
       return {
@@ -81,7 +81,7 @@
         this.logoutHandle(this.$provider).then(
           this.$router.push({
             name: config[this.$provider].loginRouteName
-          })  
+          })
         )
       }
     },
@@ -106,7 +106,7 @@
 <style rel="stylesheet/scss" lang="scss" scoped>
   .container{
     height:60px;
-   
+
   }
 
   .el-menu-vertical {

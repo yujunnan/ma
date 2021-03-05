@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>创才科技有限公司后台管理</title>
+    <title>后台管理系统</title>
 </head>
 <body>
 <div id="app">

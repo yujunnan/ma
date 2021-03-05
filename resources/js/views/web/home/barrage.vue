@@ -9,7 +9,7 @@
     .stage {
         height: 300px;
         width: 100%;
-   
+
         margin: 0;
         position: relative;
         overflow: hidden;
@@ -89,24 +89,10 @@
 <template>
     <div id="barrage">
         <div class="stage">
-            <vue-baberrage
-                :isShow = "barrageIsShow"
-                    :barrageList = "barrageList"
-                    :loop = "barrageLoop"
-                    :maxWordCount = "60"
-            >
-            </vue-baberrage>
+
         </div>
         <div class="danmu-control">
-            <div>
-                <select v-model="position">
-                    <option value="abc">从右</option>                   
-                    <option value="top">从上</option>
- 
-                </select>
-                <input type="text" style="float:left"  v-model="msg"/>
-                <button type="button" style="float:left" @click="sendMsg">发送</button>
-            </div>
+
         </div>
 
     </div>
@@ -114,60 +100,5 @@
 
 
 <script>
-import { MESSAGE_TYPE } from 'vue-baberrage'
-  // 引入公共的common，来做为中间传达的工具
-import common from '../../../common.js'
-export default {
-    name: 'danmu',
-    data () {
-        return {
-            msg: '你好，学院君！',
-            position: 'abc',
-            barrageIsShow: true,
-            currentId: 0,
-            barrageLoop: false,
-            barrageList: []
-        }
-    },
-    mounted: function () {
-      var vm = this
-      // 用$on事件来接收参数
-      common.$on('message', (data) => {
-        this.addToList(data.position,data.message);
-      })
-    },    
-    methods: {
-            removeList () {
-                this.barrageList = []
-            },
-            addToList (position, message) {
-                if (this.position === 'top') {
-                    this.barrageList.push({
-                        id: ++this.currentId,
-                        avatar: 'https://xueyuanjun.com/assets/avatars/numxwdxf8lrtrsol.jpg',
-                        msg: message,
-                        barrageStyle: 'top',
-                        time: 8,
-                        type: MESSAGE_TYPE.FROM_TOP,
-                        position: 'top'
-                    })
-                } else {
-                    this.barrageList.push({
-                        id: ++this.currentId,
-                        avatar: 'https://xueyuanjun.com/assets/avatars/numxwdxf8lrtrsol.jpg',
-                        msg: message,
-                        time: 15,
-                        type: MESSAGE_TYPE.NORMAL
-                    })
-                }
-            },
-            sendMsg(){
-                common.$emit('msg','{"position":"' + this.position + '", "message":"' + this.msg + '"}')
 
-  
-            }
-
-    },
-
-}
 </script>

@@ -4,6 +4,7 @@ export const routeByName = (name) => {
   let router;
 
   let each = (routers, name) => {
+    
     for (let item of routers) {
       if (item.name === name) {
         router = item

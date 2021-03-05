@@ -260,5 +260,6 @@ Route::get('/member', function () {
 
 
 
+Route::get('aa/list','Article\ArticleController@index');
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -4,7 +4,7 @@ export default [
     path: 'admin-user',
     meta: {
       provider: 'admin',
-      title: 'adminUser',
+      title: '管理员用户',
       cache: true,
       permission: 'admin-user.index'
     },

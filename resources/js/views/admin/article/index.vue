@@ -7,49 +7,58 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="requestData"  icon="el-icon-search">{{ $t('search') }}</el-button>
-        <el-button type="primary" v-if="addPermission"  @click="dialogAddFormVisible = true" icon="el-icon-plus">{{ $t('add') }}</el-button>
+        <el-button type="primary" v-if="addPermission"  @click="dialogAddFormVisible = true" icon="el-icon-plus">
+            {{ $t('add') }}</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table
-            :data="tableListData"
-            v-loading="loading"
-            :row-style="toggleDisplayTr"
-            border stripe
-            class="init_table">
-      <el-table-column
-              :label="$t('title')"
-              min-width="200"
-              show-overflow-tooltip
-              align="left">
-        <template slot-scope="scope">
-          <p :style="`margin-left: ${scope.row.__level * 20}px;margin-top:0;margin-bottom:0`"><i  @click="toggleFoldingStatus(scope.row)" class="permission_toggleFold" :class="toggleFoldingClass(scope.row)"></i>{{scope.row.title}}</p>
-        </template>
-      </el-table-column>
-
-      <el-table-column
+      <el-table
+          :data="tableData"
+          v-loading="loading"
+          border
+          style="width: 100%">
+          <el-table-column
+              prop="title"
+              label="标题">
+          </el-table-column>
+          <el-table-column
               prop="sequence"
-              :label="$t('sequence')">
-      </el-table-column>
+              label="排序">
+          </el-table-column>
 
-
-      <el-table-column
-              align="center"
+          <el-table-column
+              prop="created_at"
+              label="创建时间">
+          </el-table-column>
+          <el-table-column
+              prop="updated_at"
+              label="更新时间">
+          </el-table-column>
+          <el-table-column
+              fixed="right"
+              width="300px"
               :label="$t('actions')">
-        <template slot-scope="scope">
-          <el-button
-                  v-if="updatePermission"
-                  size="mini"
-                  @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button
-                  v-if="deletePermission"
-                  type="danger"
-                  size="mini"
-                  @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
+              <template slot-scope="scope">
+                  <el-button
+                      v-if="updatePermission"
+                      size="mini"
+                      @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                  <el-button
+                      v-if="deletePermission"
+                      type="danger"
+                      size="mini"
+                      @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              </template>
+          </el-table-column>
+      </el-table>
+      <el-pagination class="mo-page"
+                     @current-change="requestData"
+                     :current-page.sync="pagination.currentPage"
+                     :page-size="pagination.pageSize"
+                     layout="total, prev, pager, next, jumper"
+                     :total="pagination.total">
+      </el-pagination>
+  <!--添加-->
     <el-dialog :title="$t('add')" :visible.sync="dialogAddFormVisible" width="70%">
       <el-form :model="addForm" :rules="rules" ref="addForm">
         <el-form-item :label="$t('title')" prop="title" :label-width="formLabelWidth">
@@ -65,25 +74,41 @@
         <el-form-item :label="$t('sequence')" prop="sequence" :label-width="formLabelWidth">
           <el-input v-model.number="addForm.sequence"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('body')" prop="sequence" :label-width="formLabelWidth">
-          <mavon-editor 
-              v-model="addForm.body" 
-              ref="md" 
-              @change="change"
-              @imgAdd="$imgAdd" 
-              style="min-height: 500px"
-          />
-
-
+        <el-form-item label="头像" prop="sequence" :label-width="formLabelWidth">
+          <el-upload
+            class="avatar-uploader"
+            action="/api/upload"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>        
         </el-form-item>
+          <el-form-item label="标签" prop="type" :label-width="formLabelWidth">
+              <el-checkbox-group v-model="addForm.tags">
+                  <el-col
+                      class="permission-item"
+                      :span="6"
+                      v-for="tag in tags"
+                      :key="tag.id">
+                  <el-checkbox  :label="tag.id">{{tag.name}}</el-checkbox>
+                  </el-col>
 
-
+              </el-checkbox-group>
+          </el-form-item>
+        <el-form-item :label="$t('body')" prop="body" :label-width="formLabelWidth">
+          <quill-editor ref="myTextEditor"
+                    v-model="addForm.body" :options="quillOption">
+          </quill-editor>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddFormVisible = false">{{ $t('cancel') }}</el-button>
         <el-button type="primary" @click="handleAddArticle">{{ $t('confirm') }}</el-button>
       </div>
     </el-dialog>
+    <!--修改-->
 
     <el-dialog :title="$t('edit')" :visible.sync="dialogEditFormVisible" width="60%">
       <el-form :model="editForm" :rules="rules" ref="editForm">
@@ -102,15 +127,24 @@
         <el-form-item :label="$t('sequence')" prop="sequence" :label-width="formLabelWidth">
           <el-input v-model.number="editForm.sequence"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('body')" prop="sequence" :label-width="formLabelWidth">
-          <mavon-editor 
-              v-model="editForm.body" 
-              ref="md" 
-              @change="change"
-              @imgAdd="$imgAdd" 
-              style="min-height: 500px"
-          />
+          <el-form-item label="标签" prop="type" :label-width="formLabelWidth">
+              <el-checkbox-group v-model="editForm.tags">
+                  <el-col
+                      class="permission-item"
+                      :span="6"
+                      v-for="tag in tags"
+                      :key="tag.id">
+                      <el-checkbox  :label="tag.id">{{tag.name}}</el-checkbox>
+                  </el-col>
 
+              </el-checkbox-group>
+          </el-form-item>
+
+        <el-form-item :label="$t('body')" prop="sequence" :label-width="formLabelWidth">
+
+    <quill-editor ref="myTextEditor"
+              v-model="editForm.body" :options="quillOption">
+    </quill-editor>
 
         </el-form-item>
 
@@ -125,55 +159,66 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import { upload } from '../../../api/upload'
-  import { getArticleList, addArticle, editArticle, deleteArticle } from 
+  import { getArticleList, addArticle, editArticle, deleteArticle } from
   '../../../api/article/article'
-  import { tableDefaultData, editSuccess, addSuccess, deleteSuccess } from '../../../libs/tableDataHandle'
+  import { getTagAllList } from
+          '../../../api/system/tag'
+  import {responseDataFormat, tableDefaultData, editSuccess, addSuccess, deleteSuccess } from '../../../libs/tableDataHandle'
   import ArticleCategoryCascader from '../../../components/Cascader/ArticleCategory'
   import { hasPermission } from '../../../libs/permission'
+  import { quillEditor } from 'vue-quill-editor'
+  import quillConfig from '../../../mixins/quillConfig'
 
   export default {
     name: 'ArticleIndex',
     components: {
-      ArticleCategoryCascader
+      ArticleCategoryCascader,
+      quillEditor
     },
     data: () => ({
+      imageUrl:"",
+      quillOption: quillConfig,
       ...tableDefaultData(),
       tableListData: [],
+      editorOption: {
+        theme:'snow'
+      },
       foldList: [],
-      addForm: {},
+      addForm: {
+            tags:[]
+      },
+      tags:[],
       editForm: {},
       rules: {
-        name: [
-          { required: true },
-          { min: 1, max: 255 }
+        title: [
+            { required: true },
+            { min: 1, max: 255 }
         ],
-        parent_id: [
-          { type: 'number' }
+        article_category_id: [
+            { required: true },
+            { type: 'number' }
         ],
         sequence: [
-          {type: 'number' }
-        ]
+            { required: true },
+            {type: 'number' }
+        ],
+        body: [
+            { required: true },
+            { type: 'string' }
+        ],       
+        cover: [
+            { required: true },
+            { type: 'string' }
+        ],         
       },
     }),
     methods: {
       // 所有操作都会被解析重新渲染
       change(value, render){
-         
+
           // render 为 markdown 解析后的结果[html]
           this.html = render;
       },
-      // 将图片上传到服务器，返回地址替换到md中
-      $imgAdd(pos, $file){
-          let formdata = new FormData();
-          formdata.append('file', $file); 
-            upload(formdata).then( response => {
-              this.$refs.md.$img2Url(pos,response.data);
-            }).catch(err => {
-                console.log(err)
-            })
-      },      
       handleDelete (index, row) {
         deleteArticle(row.id).then( response => {
           deleteSuccess(index, this)
@@ -184,11 +229,18 @@
         this.editForm = row
         this.nowRowData = { index, row }
         this.dialogEditFormVisible = true
+        let newArray = this.editForm.tags.map((item) => {
+
+            return item.id;
+        })
+        this.editForm.tags=newArray;
+
       },
       handleEditArticle () {
+        this.editForm.cover =this.imageUrl;
+       
         this.$refs['editForm'].validate((valid) => {
           if (valid) {
-            console.log(this.editForm);
             editArticle(this.nowRowData.row.id, this.editForm).then( response => {
               editSuccess(this)
               this.requestData()
@@ -199,58 +251,59 @@
         })
       },
       handleAddArticle () {
+        this.addForm.cover =this.imageUrl;
+
         this.$refs['addForm'].validate((valid) => {
           if (valid) {
+            //console.log(this.addForm); return;
+
             addArticle(this.addForm).then( response => {
-              addSuccess(this)
-              this.requestData()
+                if(response.data.status_code==500){
+
+                }else{
+                    addSuccess(this)
+                    this.requestData()
+
+                }
             })
           } else {
             return false;
           }
         })
       },
-      //Author: zyx <https://github.com/no-simple/vue-tree-table>
-      toggleFoldingStatus (params) {
-        this.foldList.includes(params.__identity) ? this.foldList.splice(this.foldList.indexOf(params.__identity), 1) : this.foldList.push(params.__identity)
-      },
-
-      //Author: zyx <https://github.com/no-simple/vue-tree-table>
-      toggleDisplayTr ({row, index}) {
-        for (let i = 0; i < this.foldList.length; i++) {
-          let item = this.foldList[i]
-          if (row.__family.includes(item) && row.__identity !== item) return 'display:none;'
-        }
-        return ''
-      },
-
-      //Author: zyx <https://github.com/no-simple/vue-tree-table>
-      toggleFoldingClass (params) {
-        return params.children.length === 0 ? 'permission_placeholder' : (this.foldList.indexOf(params.__identity) === -1 ? 'iconfont el-icon-minus' : 'iconfont el-icon-plus')
-      },
-
-      //Author: zyx <https://github.com/no-simple/vue-tree-table>
-      formatConversion (parent, children, index = 0, family = [], elderIdentity = 'x') {
-        if (children.length > 0) {
-          children.map((x, i) => {
-            Vue.set(x, '__level', index)
-            Vue.set(x, '__family', [...family, elderIdentity + '_' + i])
-            Vue.set(x, '__identity', elderIdentity + '_' + i)
-            parent.push(x)
-            if (!x.hasOwnProperty('children')) {
-              x.children = []
-            }
-            if (x.children.length > 0) this.formatConversion(parent, x.children, index + 1, [...family, elderIdentity + '_' + i], elderIdentity + '_' + i)
-          })
-        } return parent
-      },
       requestData () {
+        var that=this;
         this.loading = true
-        getArticleList(this.queryParams).then( response => {
-          this.tableListData = this.formatConversion([], response.data.data)
-          this.loading = false
+        getArticleList({...this.queryParams, page: this.queryPage}).then( response => {
+            responseDataFormat(response, this)
+            this.loading = false
         })
+        getTagAllList({}).then( response => {
+            that.tags=response.data;
+            this.loading = false
+        })
+      },
+      handleAvatarSuccess(res, file) {
+        
+        this.imageUrl = res;
+      },
+      beforeAvatarUpload(file) {
+       
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        /*
+         const isJPG = file.type === 'image/jpeg';
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        */
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isLt2M;
       }
+
+
+
     },
     computed: {
       updatePermission: function() {
@@ -262,7 +315,10 @@
       },
       deletePermission: function() {
         return hasPermission('article.destroy')
-      }
+      },
+      editor() {
+      return this.$refs.myQuillEditor.quill;
+      },      
     },
     created() {
       this.requestData()
@@ -323,5 +379,27 @@
       background-color:#f7f9fa;
     }
   }
-
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>

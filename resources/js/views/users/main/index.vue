@@ -2,7 +2,7 @@
   <el-container style="height:100%;">
       <el-header>
         <nav-bar :is-collapse="isCollapse"></nav-bar>
-      </el-header>  
+      </el-header>
       <el-main>
         <keep-alive>
           <router-view/>
@@ -17,26 +17,26 @@
 
 <script>
 
-  import { NavBar } from '../../../components/WebLayout'
+    import { NavBar } from '../../../components/WebLayout'
 
-  import { mapActions } from 'vuex'
-  export default {
-    data() {
-      return {
-        isCollapse:Boolean
-      }
-    },
-    components: {
-      NavBar
-    },
-    methods: {
+    import { mapActions } from 'vuex'
+    export default {
+        data() {
+            return {
+                isCollapse:Boolean
+            }
+        },
+        components: {
+            NavBar
+        },
+        methods: {
 
-    },
-    created() {
-      
-    },
-    computed: {
+        },
+        created() {
 
+        },
+        computed: {
+
+        }
     }
-  }
 </script>

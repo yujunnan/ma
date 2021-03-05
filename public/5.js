@@ -176,7 +176,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     GuardSelect: _components_Select_Guard__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
-    return _objectSpread({}, Object(_libs_tableDataHandle__WEBPACK_IMPORTED_MODULE_1__["tableDefaultData"])(), {
+    return _objectSpread(_objectSpread({}, Object(_libs_tableDataHandle__WEBPACK_IMPORTED_MODULE_1__["tableDefaultData"])()), {}, {
       addForm: {
         name: '',
         guard_name: '',
@@ -229,7 +229,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this2 = this;
 
       this.loading = true;
-      Object(_api_role__WEBPACK_IMPORTED_MODULE_0__["getRoleList"])(_objectSpread({}, this.queryParams, {
+      Object(_api_role__WEBPACK_IMPORTED_MODULE_0__["getRoleList"])(_objectSpread(_objectSpread({}, this.queryParams), {}, {
         page: this.queryPage
       })).then(function (response) {
         Object(_libs_tableDataHandle__WEBPACK_IMPORTED_MODULE_1__["responseDataFormat"])(response, _this2);

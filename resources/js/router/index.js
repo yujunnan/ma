@@ -49,12 +49,7 @@ router.beforeEach((to, from, next) => {
         }).catch(error => {
           reject(error)
         })
-        
-
-
-
       })
-
       let permission = new Promise((resolve, reject) => {
         if (!to.meta.permission) {
           resolve()
@@ -91,3 +86,8 @@ router.beforeEach((to, from, next) => {
 })
 
 export default router
+
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}

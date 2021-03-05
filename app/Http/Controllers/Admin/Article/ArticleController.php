@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Admin\Article;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article\Article;
+use App\Resources\DataCollection;
 use Illuminate\Http\Request;
+use App\Models\Article\Requests\CreateArticleFormRequest;
+use Illuminate\Support\Facades\DB;
+
 
 class ArticleController extends Controller
 {
@@ -15,12 +19,16 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
-        $menus = Article::query()
-            ->where('title','like','%'.$request->input('title').'%')
+        $menus = Article::query()->select(['id','title','sequence','article_category_id','body','updated_at','created_at','cover'])
+        ->where('title','like','%'.$request->input('title').'%')
             ->orderBy('sequence', 'desc')
-            ->get();
+            ->with(['tags'=>function($query){
+                $query->get(['tags.id']);
+            },'article_category'=>function($query){
+                $query->select(['id','name','sequence']);
+            }])->paginate();
 
-        return response()->json(['data' => $menus->toArray()]);
+        return new DataCollection($menus);
     }
 
     /**
@@ -39,10 +47,15 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateArticleFormRequest $request)
     {
-        Article::create($request->all());
-        return $this->created();        
+       //return $request->all();
+        DB::transaction(function ()use($request) {
+            $article =Article::create($request->all());
+            $article->tags()->attach($request->input(['tags']));
+        });
+
+        return $this->created();
     }
 
     /**
@@ -77,9 +90,9 @@ class ArticleController extends Controller
     public function update(Request $request,$id)
     {
         $article = Article::query()->findOrFail($id);
+        $article->tags()->sync($request->input(['tags']));
 
         $article->update($request->toArray());
-
         return $this->noContent();
     }
 
@@ -94,6 +107,7 @@ class ArticleController extends Controller
         $article = Article::query()->findOrFail($id);
 
 
+        $article->tags()->detach();
 
         $article->delete();
 

@@ -12,7 +12,7 @@ export default {
 
     appName: {
       fullName: '后台管理',
-      abbrName: '创材科技'
+      abbrName: '创新'
     },
 
     locale: 'zh_CN'

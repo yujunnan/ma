@@ -7,11 +7,11 @@
       <el-carousel-item v-for="item in 4" :key="item">
         <h3 class="small">{{ item }}</h3>
       </el-carousel-item>
-    </el-carousel>  
+    </el-carousel>
   </el-col>
   <el-col :span="24">
+  <div class="ql-editor" v-html="data.body"> </div>
 
-  <p>ello Worl</p>
   </el-col>
 
 </el-row>
@@ -19,15 +19,27 @@
 
 </template>
 <script>
-
+  import { getArticleList } from '../../../api/web/article'
   export default {
     data() {
       return {
-
+        data:{
+          body:""
+        }
       };
     },
     methods: {
+
+
+    },
+    created() {
+          getArticleList({...this.queryParams, page: this.queryPage}).then( response => {
+            this.data.body=response.data.data.body;
+
+          })
+
     }
+
   }
 </script>
 <style>
@@ -42,10 +54,10 @@
   .el-carousel__item:nth-child(2n) {
      background-color: #99a9bf;
   }
-  
+
   .el-carousel__item:nth-child(2n+1) {
      background-color: #d3dce6;
   }
-  
+
 
 </style>

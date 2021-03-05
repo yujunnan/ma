@@ -9,7 +9,9 @@ Route::middleware(['api', config('mojito.super_admin.auth'), 'mojito.permission'
         Route::resource('/article/article',  'Admin\Article\ArticleController', ['only' =>
         ['index', 'show', 'store', 'update', 'destroy']
         ]);
-
+        Route::resource('/system/tag',  'Admin\Tag\TagController', ['only' =>
+        ['index', 'show', 'store', 'update', 'destroy']
+        ]);
 });
 
 ?>

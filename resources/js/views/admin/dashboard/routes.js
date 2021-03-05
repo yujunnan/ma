@@ -4,7 +4,7 @@ export default [
     path: 'dashboard',
     meta: {
       provider: 'admin',
-      title: 'dashboard',
+      title: '标题',
       cache: true,
       notClosable: true
     },

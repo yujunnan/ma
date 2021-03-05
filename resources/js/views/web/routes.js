@@ -14,7 +14,7 @@ export default [
               name: 'home',
               path: 'home',
               meta: {
-                
+
               },
               component: resolve => void(require(['../../views/web/home/index.vue'], resolve))
             },

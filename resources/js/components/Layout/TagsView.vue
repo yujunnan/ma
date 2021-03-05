@@ -16,10 +16,10 @@
           <i class="el-icon-close"></i>
         </el-button>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="closeAll">{{ $t('closeButton.closeAll') }}</el-dropdown-item>
-          <el-dropdown-item @click.native="closeOther">{{ $t('closeButton.closeOther') }}</el-dropdown-item>
-          <el-dropdown-item @click.native="closeRight">{{ $t('closeButton.closeRight') }}</el-dropdown-item>
-          <el-dropdown-item @click.native="closeLeft">{{ $t('closeButton.closeLeft') }}</el-dropdown-item>
+          <el-dropdown-item @click.native="closeAll">关闭所有</el-dropdown-item>
+          <el-dropdown-item @click.native="closeOther">关闭其他</el-dropdown-item>
+          <el-dropdown-item @click.native="closeRight">关闭右侧</el-dropdown-item>
+          <el-dropdown-item @click.native="closeLeft">关闭左侧</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
 
@@ -34,7 +34,7 @@
           :disable-transitions="false"
           @click.native="openTagPage(tag)"
           @close="closeTagPage(tag)">
-          <i class="el-icon-star-on" v-if="isStar(tag)"></i> {{ $t(`meta.title.${tag.title}`) }}
+          <i class="el-icon-star-on" v-if="isStar(tag)"></i> {{ $t(`${tag.title}`) }}
         </el-tag>
       </div>
     </div>
@@ -51,7 +51,7 @@
     },
     methods: {
       isActive (tag) {
-        return tag.fullPath === this.$route.fullPath ? '' : '#fff'
+        return tag.fullPath === this.$route.fullPath ?'#fff'  : ''
       },
       isStar (tag) {
         return tag.fullPath === this.$route.fullPath
@@ -67,7 +67,6 @@
           }
         })
 
-        console.log(this.$route.matched)
 
         this.$store.commit('CLOSE_TAG_HANDLE', tagList)
         this.$router.push({path: this.$config[this.$provider].dashboardFullPath})

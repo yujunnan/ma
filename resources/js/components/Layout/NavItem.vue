@@ -7,8 +7,8 @@
       </span>
     </template>
     <template v-for="children in item.children">
-      <nav-item v-if="children.children" :item="children"></nav-item>
-      <el-menu-item :index="children.uri" v-else>
+      <nav-item v-if="children.children" :item="children" :key="children.id"></nav-item>
+      <el-menu-item :index="children.uri" :key="children.id" v-else>
         <i :class="children.icon" v-if="children.icon"></i>
         {{ children.name }}
       </el-menu-item>

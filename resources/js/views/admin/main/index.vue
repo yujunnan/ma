@@ -1,6 +1,6 @@
 <template>
   <el-container style="height:100%">
-    <nav-bar :is-collapse="isCollapse"></nav-bar>
+    <nav-bar :is-collapse="isCollapse" style="min-height:600px"></nav-bar>
     <el-container direction="vertical">
       <mojito-header :is-collapse="isCollapse"  v-on:menu="changeMenuStatus"></mojito-header>
       <tags-view></tags-view>

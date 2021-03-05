@@ -11,7 +11,11 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix.webpackConfig({
+    devServer: { // DevServer 相关配置
+        disableHostCheck: true
+    },
+}).js('resources/js/app.js', 'public/js')
     .js('resources/js/admin.js', 'public/js')
     .js('resources/js/member.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');

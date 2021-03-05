@@ -6,10 +6,10 @@
       </el-col>
       <el-col :span="15">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item v-for="bc in breadcrumb" :to="{ path: bc.path }" :key="bc.path"> {{ $t(`meta.title.${bc.meta.title}`) }}</el-breadcrumb-item>
+          <el-breadcrumb-item v-for="bc in breadcrumb" :to="{ path: bc.path }" :key="bc.path"> {{ $t(`${bc.meta.title}`) }}</el-breadcrumb-item>
         </el-breadcrumb>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="8" >
         <div class="avatar">
           <el-dropdown>
             <el-button :plain="true">
